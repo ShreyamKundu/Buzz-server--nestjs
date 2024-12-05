@@ -43,4 +43,9 @@ export class PostsController {
     const userId = req.cookies.userId;
     return this.postsService.addComment(postId, userId, content);
   }
+
+  @Get('aimessage')
+  async groqMessage(){
+    return this.postsService.groqMessage();
+  }
 }

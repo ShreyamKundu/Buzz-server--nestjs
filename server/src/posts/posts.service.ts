@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 import { analyzeComment } from 'src/perspective.config';
+import { main as getGroqData } from '../groq.config';
 
 @Injectable()
 export class PostsService {
@@ -104,5 +105,15 @@ export class PostsService {
         postId, // Post the comment is related to
       },
     });
+  }
+
+  async groqMessage() {
+    try {
+      const data = await getGroqData();
+      return { result: data }; 
+    } catch (error) {
+      // Handle errors using NestJS exception mechanisms
+      throw new BadRequestException('Failed to fetch data from GROQ.');
+    }
   }
 }
